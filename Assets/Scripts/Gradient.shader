@@ -1,18 +1,10 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Custom/SpriteGradient" {
+﻿Shader "Custom/SpriteGradient" {
 	Properties{
-		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
-		_Color("Left Color", Color) = (1,1,1,1)
-		_Color2("Right Color", Color) = (1,1,1,1)
+		_Base("Base", Color) = (1,1,1,1)
+		_Color("Color", Color) = (1,1,1,1)
 	}
 
 	SubShader{
-		Tags{ "Queue" = "Background"  "IgnoreProjector" = "True" }
-		LOD 100
-
-		ZWrite On
-
 		Pass{
 			CGPROGRAM
 
@@ -20,8 +12,8 @@ Shader "Custom/SpriteGradient" {
 			#pragma fragment frag
 			#include "UnityCG.cginc"
 
+			fixed4 _Base;
 			fixed4 _Color;
-			fixed4 _Color2;
 
 			struct v2f {
 				float4 pos : SV_POSITION;
@@ -33,7 +25,10 @@ Shader "Custom/SpriteGradient" {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
 
-				o.col = lerp(_Color, _Color2, v.texcoord.x);
+				float2x2 rotationMatrix = float2x2(1, 0, -1, 0);
+				v.texcoord.xy = mul(v.texcoord.xy, rotationMatrix);
+
+				o.col = lerp(_Base, _Color, v.texcoord.x);
 
 				return o;
 			}
