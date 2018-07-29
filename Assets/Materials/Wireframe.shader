@@ -17,11 +17,10 @@ Shader "Custom/Wireframe"
 	{
 		CGPROGRAM
 		#include "UnityCG.cginc"
-		#pragma target 4.0
+		#pragma target 3.0
 		#pragma vertex vert
 		#pragma geometry geom
 		#pragma fragment frag
-
 
 		half4 _WireColor, _Color;
 

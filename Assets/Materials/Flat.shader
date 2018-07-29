@@ -6,7 +6,6 @@ Shader "Custom/Flat"
 	Properties
 	{
 		_Color("Color", Color) = (1,1,1,1)
-		_MainTex("Albedo", 2D) = "white" {}
 	}
 
 		SubShader
@@ -74,12 +73,11 @@ Shader "Custom/Flat"
 		}
 	}
 
-	half4 frag(g2f i) : COLOR
-	{
-		float4 col = tex2D(_MainTex, i.uv);
-		col.rgb *= i.light * _Color;
-		return col;
-	}
+		half4 frag(g2f i) : COLOR
+		{
+			//testing with some values
+			return (i.light + 0.2) * (_Color - 0.5) + 0.1;
+		}
 
 		ENDCG
 	}
