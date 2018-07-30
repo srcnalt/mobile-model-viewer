@@ -36,7 +36,7 @@ public class OptionsController : MonoBehaviour
         statsText.text = ObjImporter.modelStats;
     }
 
-    public void ChangeMorphAmount()
+    private void ChangeMorphAmount()
     {
         meshRenderer.material.SetFloat("_Value", morphSlider.value);
     }
