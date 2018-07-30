@@ -11,6 +11,7 @@ public static class ObjImporter
 
     private static string materialName;
     private static string mainPath;
+    private static string fileSize;
 
     public static string modelStats;
 
@@ -65,6 +66,8 @@ public static class ObjImporter
         List<Vector3> normalList = new List<Vector3>();
         List<Vector3> faceList = new List<Vector3>();
         List<int> faceIndex = new List<int>();
+
+        fileSize = (new FileInfo(path).Length / 1024).ToString();
 
         StreamReader stream = File.OpenText(path);
         string entireText = stream.ReadToEnd();
@@ -162,7 +165,8 @@ public static class ObjImporter
         modelStats = "";
         modelStats += "Vertex Count:\t\t" + vertices.Count + "\n";
         modelStats += "Triangle Count:\t\t" + tris.Count + "\n";
-        modelStats += "Model Bounds:\t\t" + mesh.bounds.size.ToString();
+        modelStats += "Model Bounds:\t\t" + mesh.bounds.size.ToString() + "\n";
+        modelStats += "File Size:\t\t\t\t" + fileSize + " Kb";
 
         return mesh;
     }
